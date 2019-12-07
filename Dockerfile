@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM wordpress:php7.3-apache
 
 ENV XDEBUG_PORT 9000
 
