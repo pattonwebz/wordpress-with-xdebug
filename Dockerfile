@@ -9,6 +9,6 @@ RUN yes | pecl install xdebug && \
 	echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/xdebug.ini && \
 	echo "xdebug.remote_mode=req" >> /usr/local/etc/php/conf.d/xdebug.ini && \
 	echo "xdebug.remote_autostart=false" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-	echo "66.155.40.202 api.wordpress.org" >> /etc/hosts
+	echo "198.143.164.251 api.wordpress.org" >> /etc/hosts
 
 EXPOSE 9000
