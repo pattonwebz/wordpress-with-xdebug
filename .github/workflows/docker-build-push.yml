@@ -33,46 +33,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push PHP 7.0
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            PHP_VERSION=php7.0-apache
-          tags: pattonwebz/local-wordpress-with-xdebug:php7.0-apache
-
-      - name: Build and push PHP 7.1
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            PHP_VERSION=php7.1-apache
-          tags: pattonwebz/local-wordpress-with-xdebug:php7.1-apache
-
-      - name: Build and push PHP 7.2
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            PHP_VERSION=php7.2-apache
-          tags: pattonwebz/local-wordpress-with-xdebug:php7.2-apache
-
-      - name: Build and push PHP 7.4
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            PHP_VERSION=php7.4-apache
-          tags: pattonwebz/local-wordpress-with-xdebug:php7.4-apache
-
       - name: Build and push PHP 8.0
         uses: docker/build-push-action@v4
         with:
