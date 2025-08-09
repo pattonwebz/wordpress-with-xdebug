@@ -4,47 +4,17 @@ FROM wordpress:${PHP_VERSION}
 
 ENV XDEBUG_PORT_V2=9000
 ENV XDEBUG_PORT_V3=9003
-ARG PHP_MAJOR_VERSION=8
 
-# Install some nice to have dependencies for PHP extensions and developer tools
-RUN apt-get update && apt-get install -y \
+# Install only essential dependencies for PHP extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu-dev \
-    libzip-dev \
-    zlib1g-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libxml2-dev \
-    libssl-dev \
-    libonig-dev \
-    vim \
-    nano \
-    git \
-    unzip \
-    mariadb-client \
-    msmtp \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions commonly used in WordPress development
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        intl \
-        mysqli \
-        pdo_mysql \
-        zip \
-        gd \
-        soap \
-        bcmath \
-        exif \
-        opcache \
+# Install only the required PHP extensions: Intl and Redis
+RUN docker-php-ext-install intl \
     && pecl install redis \
     && docker-php-ext-enable redis
-
-# Install WP-CLI
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-    && chmod +x wp-cli.phar \
-    && mv wp-cli.phar /usr/local/bin/wp
 
 # Install and configure Xdebug
 RUN yes | pecl install xdebug && \
