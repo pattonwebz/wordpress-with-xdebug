@@ -44,5 +44,14 @@ RUN { \
         echo 'max_execution_time = 300'; \
     } > /usr/local/etc/php/conf.d/wordpress-recommended.ini
 
+# Install wp-cli for WordPress command line operations and create a wrapper script that includes --allow-root
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp-orig && \
+    echo '#!/bin/bash' > /usr/local/bin/wp-cli-wrapper && \
+    echo 'exec wp-orig --allow-root "$@"' >> /usr/local/bin/wp-cli-wrapper && \
+    chmod +x /usr/local/bin/wp-cli-wrapper && \
+    ln -s /usr/local/bin/wp-cli-wrapper /usr/local/bin/wp
+
 EXPOSE 9000
 EXPOSE 9003
