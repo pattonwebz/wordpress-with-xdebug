@@ -1,0 +1,113 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  # Allow manual triggering
+  workflow_dispatch:
+  # Run once a month to keep images updated with latest security patches
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+# The PHP 7.x versions are commented out as they are legacy and should just remain as is.
+#      - name: Build and push PHP 7.0
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          build-args: |
+#            PHP_VERSION=php7.0-apache
+#          tags: pattonwebz/local-wordpress-with-xdebug:php7.0-apache
+#
+#      - name: Build and push PHP 7.1
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          build-args: |
+#            PHP_VERSION=php7.1-apache
+#          tags: pattonwebz/local-wordpress-with-xdebug:php7.1-apache
+#
+#      - name: Build and push PHP 7.2
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          build-args: |
+#            PHP_VERSION=php7.2-apache
+#          tags: pattonwebz/local-wordpress-with-xdebug:php7.2-apache
+#
+#      - name: Build and push PHP 7.4
+#        uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          push: true
+#          build-args: |
+#            PHP_VERSION=php7.4-apache
+#          tags: pattonwebz/local-wordpress-with-xdebug:php7.4-apache
+
+      - name: Build and push PHP 8.0
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=php8.0-apache
+          tags: pattonwebz/local-wordpress-with-xdebug:php8.0-apache
+
+      - name: Build and push PHP 8.1
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=php8.1-apache
+          tags: pattonwebz/local-wordpress-with-xdebug:php8.1-apache
+
+      - name: Build and push PHP 8.2
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=php8.2-apache
+          tags: |
+            pattonwebz/local-wordpress-with-xdebug:php8.2-apache
+            pattonwebz/local-wordpress-with-xdebug:latest
+
+      - name: Build and push PHP 8.3
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=php8.3-apache
+          tags: pattonwebz/local-wordpress-with-xdebug:php8.3-apache
+
+      - name: Build and push PHP 8.4
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=php8.4-apache
+          tags: pattonwebz/local-wordpress-with-xdebug:php8.4-apache
